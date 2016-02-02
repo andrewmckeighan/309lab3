@@ -14,6 +14,8 @@ import java.awt.Dimension;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -140,6 +142,16 @@ public class Client extends JFrame {
 		chatText.setColumns(25);
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(chatText.getText()==""){
+					return;
+				}else{
+				textArea.append("You: " + chatText.getText()+"\n");
+				chatText.setText("");
+				}
+			}
+		});
 		panel_7.add(btnSubmit);
 		
 		btnEnterChat.addActionListener(new ActionListener() {
