@@ -24,11 +24,14 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Client extends JFrame {
 
@@ -39,6 +42,9 @@ public class Client extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	static PrintWriter out;
+	
 	public static void main(String[] args) throws UnknownHostException,
 	IOException, InterruptedException{
 		
@@ -54,7 +60,8 @@ public class Client extends JFrame {
 		});
 		Socket socket = new Socket("localhost", 4444);
 	    Thread.sleep(1000);
-		
+	    
+		out = new PrintWriter(socket.getOutputStream());
 		
 	    
 	    
@@ -142,14 +149,22 @@ public class Client extends JFrame {
 		chatText.setColumns(25);
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyCode()==KeyEvent.VK_ENTER){
+					btnSubmit.doClick();
+				}
+			}
+		});
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(chatText.getText()==""){
-					return;
-				}else{
+				
 				textArea.append("You: " + chatText.getText()+"\n");
+				out.println(chatText.getText());
+				out.flush();
 				chatText.setText("");
-				}
+				
 			}
 		});
 		panel_7.add(btnSubmit);
