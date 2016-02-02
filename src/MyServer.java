@@ -74,7 +74,7 @@ class ClientHandler implements Runnable {
 	public void run() {
 		printSocketInfo(s); // just print some information at the server side about the connection
 		Scanner in;
-		
+		while(s.isConnected()==true && s.isClosed()!=true){
 		try {
 			// 1. USE THE SOCKET TO READ WHAT THE CLIENT IS SENDING
 			in = new Scanner(s.getInputStream()); 
@@ -86,7 +86,7 @@ class ClientHandler implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		}
 		// This handling code dies after doing all the printing
 	} // end of method run()
 

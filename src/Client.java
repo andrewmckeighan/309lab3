@@ -62,10 +62,6 @@ public class Client extends JFrame {
 	    Thread.sleep(1000);
 	    
 		out = new PrintWriter(socket.getOutputStream());
-		
-	    
-	    
-	    
 	}
 
 	/**
